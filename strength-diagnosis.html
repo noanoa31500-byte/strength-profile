@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>科学的強み診断 | Strength Profile</title>
+<meta name="theme-color" content="#e8ff3c">
+<meta name="description" content="Big Five & VIA 統合 — あなたの強みを科学で解き明かす">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<!-- ── START SCREEN ── -->
+<section id="screen-start" class="screen active">
+  <div class="header">
+    <div class="logo"><span>STRENGTH</span> PROFILE</div>
+    <div class="logo">科学的強み診断</div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;text-align:center;">
+    <div class="start-badge">SCIENTIFIC ASSESSMENT · 40 QUESTIONS</div>
+    <h1 class="start-title">あなたの<em>強み</em>を<br>科学で解き明かす</h1>
+    <p class="start-sub">心理学の2大フレームワーク「Big Five」と「VIA強み分類」を統合し、あなた固有の強みプロフィールを生成します。</p>
+    <div class="frameworks">
+      <div class="framework-tag">Big Five · Costa &amp; McCrae 1992</div>
+      <div class="framework-tag">VIA · Peterson &amp; Seligman 2004</div>
+    </div>
+    <button class="btn-primary" id="btnStart" onclick="startQuiz()">診断を始める →</button>
+    <div class="start-meta" style="margin-top:20px;">所要時間：約5分 · 40問</div>
+    <div id="restoreNotice" class="restore-notice" style="display:none"></div>
+  </div>
+</section>
+
+<!-- ── QUIZ SCREEN ── -->
+<section id="screen-quiz" class="screen">
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar" style="width:0%"></div>
+  </div>
+  <div class="quiz-body">
+    <div class="q-counter">Q <span id="qNum">1</span> / 40</div>
+    <div class="q-category" id="qCategory">BIG FIVE · 開放性</div>
+    <div class="q-text" id="qText"></div>
+    <div class="scale-wrap">
+      <div class="scale-labels">
+        <span>全くそうでない</span>
+        <span>非常にそうだ</span>
+      </div>
+      <div class="scale-btns" id="scaleBtns">
+        <button class="scale-btn" onclick="selectAnswer(1)">1</button>
+        <button class="scale-btn" onclick="selectAnswer(2)">2</button>
+        <button class="scale-btn" onclick="selectAnswer(3)">3</button>
+        <button class="scale-btn" onclick="selectAnswer(4)">4</button>
+        <button class="scale-btn" onclick="selectAnswer(5)">5</button>
+      </div>
+    </div>
+    <div class="quiz-nav">
+      <button class="btn-ghost" id="btnPrev" onclick="prevQuestion()" disabled>← 戻る</button>
+      <button class="btn-ghost" id="btnNext" onclick="nextQuestion()" disabled>次へ →</button>
+    </div>
+    <div class="kbd-hint"><kbd>1</kbd>〜<kbd>5</kbd> で回答 &nbsp;·&nbsp; <kbd>Enter</kbd> で次へ &nbsp;·&nbsp; <kbd>←</kbd> で戻る</div>
+  </div>
+</section>
+
+<!-- ── RESULT SCREEN ── -->
+<section id="screen-result" class="screen">
+  <div class="result-header">
+    <div class="logo"><span>STRENGTH</span> PROFILE · 診断結果</div>
+    <div class="result-actions">
+      <button class="btn-share" onclick="shareResultURL()">リンクをコピー</button>
+      <button class="btn-share" onclick="shareResult()">テキストをコピー</button>
+      <button class="btn-share" onclick="downloadShareImage()">画像をDL</button>
+      <button class="btn-share" onclick="window.print()">印刷・PDF</button>
+      <button class="btn-retry" onclick="retryQuiz()">もう一度診断する</button>
+    </div>
+  </div>
+  <div class="result-content">
+
+    <!-- CATCHCOPY -->
+    <div class="catchcopy-section anim-fadeup anim-delay-1">
+      <div class="catchcopy-label">— YOUR STRENGTH PROFILE —</div>
+      <div class="catchcopy-text" id="catchcopyText"></div>
+    </div>
+
+    <!-- STRENGTH SOUNDTRACK -->
+    <div class="section anim-fadeup anim-delay-2" id="soundtrackSection"></div>
+
+    <!-- CONSISTENCY SCORE -->
+    <div class="section anim-fadeup anim-delay-2" id="consistencySection"></div>
+
+    <!-- RADAR CHART -->
+    <div class="section anim-fadeup anim-delay-2">
+      <div class="section-title">
+        <div class="section-title-text">BIG FIVE · RADAR</div>
+        <div class="section-title-line"></div>
+      </div>
+      <div class="radar-wrap">
+        <canvas id="radarCanvas" width="340" height="340"></canvas>
+        <div class="radar-legend" id="radarLegend"></div>
+      </div>
+    </div>
+
+    <!-- BIG FIVE DETAIL -->
+    <div class="section anim-fadeup anim-delay-3">
+      <div class="section-title">
+        <div class="section-title-text">BIG FIVE · DETAIL</div>
+        <div class="section-title-line"></div>
+      </div>
+      <div class="bigfive-list" id="bigFiveList"></div>
+    </div>
+
+    <!-- VIA TOP 5 -->
+    <div class="section anim-fadeup anim-delay-4">
+      <div class="section-title">
+        <div class="section-title-text">VIA SIGNATURE STRENGTHS · TOP 5</div>
+        <div class="section-title-line"></div>
+      </div>
+      <div class="via-grid" id="viaGrid"></div>
+    </div>
+
+    <!-- INTUITION ANALYSIS -->
+    <div class="section anim-fadeup anim-delay-5" id="intuitionSection"></div>
+
+    <!-- SHADOW SIDE -->
+    <div class="section anim-fadeup anim-delay-6" id="shadowSection"></div>
+
+    <!-- CITATION -->
+    <div class="anim-fadeup anim-delay-5">
+      <div class="section-title">
+        <div class="section-title-text">SCIENTIFIC BASIS</div>
+        <div class="section-title-line"></div>
+      </div>
+      <div class="citation">
+        <div class="citation-title">参考文献 · REFERENCES</div>
+        <div class="citation-list">
+          <div class="citation-item">· Big Five Personality Model — Costa, P.T., &amp; McCrae, R.R. (1992). <em>Revised NEO Personality Inventory.</em> Goldberg, L.R. (1990). IPIP.</div>
+          <div class="citation-item">· VIA Classification of Character Strengths — Peterson, C., &amp; Seligman, M.E.P. (2004). <em>Character Strengths and Virtues.</em> University of Pennsylvania.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SHARE CANVAS (hidden) -->
+<canvas id="shareCanvas" style="display:none;position:absolute;top:-9999px;left:-9999px;"></canvas>
+
+<!-- TOAST -->
+<div class="toast" id="toast">コピーしました ✓</div>
+
+<!-- JavaScript (依存関係の順に読み込む) -->
+<script src="./data.js"></script>
+<script src="./quiz.js"></script>
+<script src="./compute.js"></script>
+<script src="./soundtrack.js"></script>
+<script src="./render.js"></script>
+<script src="./share.js"></script>
+<script src="./main.js"></script>
+
+</body>
+</html>

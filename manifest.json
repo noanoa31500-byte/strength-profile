@@ -1,0 +1,18 @@
+{
+  "name": "科学的強み診断 | Strength Profile",
+  "short_name": "強み診断",
+  "description": "Big Five & VIA 統合 — あなたの強みを科学で解き明かす",
+  "start_url": "./strength-diagnosis.html",
+  "display": "standalone",
+  "background_color": "#0f0f0f",
+  "theme_color": "#e8ff3c",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
