@@ -26,17 +26,17 @@ function decodeResult(b64) {
 
 function shareResultURL() {
   const savedStr = localStorage.getItem('strength_result');
-  if (!savedStr) { showToast('先に診断を完了してください'); return; }
+  if (!savedStr) { showToast(t('toastNeedResult')); return; }
   const result  = JSON.parse(savedStr);
   const encoded = encodeResult(result);
   const url     = `${location.origin}${location.pathname}#r=${encoded}`;
   if (navigator.share) {
-    navigator.share({title:'私の強みプロフィール', url}).catch(() => {});
+    navigator.share({title: t('shareTitle'), url}).catch(() => {});
   } else {
     navigator.clipboard.writeText(url).then(() => {
-      showToast('リンクをコピーしました ✓');
+      showToast(t('toastCopiedLink'));
     }).catch(() => {
-      prompt('URLをコピーしてください:', url);
+      prompt('URL:', url);
     });
   }
 }
@@ -44,11 +44,11 @@ function shareResultURL() {
 function shareResult() {
   const el = document.getElementById('catchcopyText');
   const text = el.textContent || el.innerText;
-  const shareText = `私の強みプロフィール：${text} #強み診断 #BigFive #VIA`;
+  const shareText = `${t('shareTitle')}：${text} ${t('shareHashtags')}`;
   navigator.clipboard.writeText(shareText).then(() => {
-    showToast('コピーしました ✓');
+    showToast(t('toastCopied'));
   }).catch(() => {
-    prompt('以下のテキストをコピーしてください:', shareText);
+    prompt('', shareText);
   });
 }
 

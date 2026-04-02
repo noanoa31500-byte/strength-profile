@@ -21,6 +21,11 @@ document.addEventListener('keydown', (e) => {
 
 // 起動時：URLハッシュから共有結果を復元、または途中保存ノーティス
 window.addEventListener('DOMContentLoaded', () => {
+  // 保存済み言語を適用
+  applyStaticTranslations();
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === currentLang);
+  });
   const hash = location.hash;
   if (hash.startsWith('#r=')) {
     try {

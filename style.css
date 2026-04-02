@@ -36,6 +36,16 @@ body{
 }
 .logo span{color:var(--accent)}
 
+/* ── LANG SWITCH ── */
+.lang-switch{display:flex;gap:4px}
+.lang-btn{
+  background:none;border:1px solid var(--border);border-radius:6px;
+  padding:4px 10px;cursor:pointer;font-size:16px;line-height:1;
+  transition:border-color .15s;
+}
+.lang-btn.active{border-color:var(--accent);box-shadow:0 0 0 1px rgba(232,255,60,.25)}
+.lang-btn:hover{border-color:var(--text2)}
+
 /* ── START SCREEN ── */
 #screen-start{
   align-items:center;justify-content:center;

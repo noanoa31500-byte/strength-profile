@@ -19,18 +19,21 @@
 <section id="screen-start" class="screen active">
   <div class="header">
     <div class="logo"><span>STRENGTH</span> PROFILE</div>
-    <div class="logo">科学的強み診断</div>
+    <div class="lang-switch">
+      <button class="lang-btn active" data-lang="ja" onclick="setLang('ja')">🇯🇵</button>
+      <button class="lang-btn"        data-lang="en" onclick="setLang('en')">🇬🇧</button>
+    </div>
   </div>
   <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;text-align:center;">
-    <div class="start-badge">SCIENTIFIC ASSESSMENT · 40 QUESTIONS</div>
-    <h1 class="start-title">あなたの<em>強み</em>を<br>科学で解き明かす</h1>
-    <p class="start-sub">心理学の2大フレームワーク「Big Five」と「VIA強み分類」を統合し、あなた固有の強みプロフィールを生成します。</p>
+    <div class="start-badge" data-i18n="badge">SCIENTIFIC ASSESSMENT · 40 QUESTIONS</div>
+    <h1 class="start-title" data-i18n="heroTitle">あなたの<em>強み</em>を<br>科学で解き明かす</h1>
+    <p class="start-sub" data-i18n="heroParagraph">心理学の2大フレームワーク「Big Five」と「VIA強み分類」を統合し、あなた固有の強みプロフィールを生成します。</p>
     <div class="frameworks">
       <div class="framework-tag">Big Five · Costa &amp; McCrae 1992</div>
       <div class="framework-tag">VIA · Peterson &amp; Seligman 2004</div>
     </div>
-    <button class="btn-primary" id="btnStart" onclick="startQuiz()">診断を始める →</button>
-    <div class="start-meta" style="margin-top:20px;">所要時間：約5分 · 40問</div>
+    <button class="btn-primary" id="btnStart" onclick="startQuiz()" data-i18n="startBtn">診断を始める →</button>
+    <div class="start-meta" style="margin-top:20px;" data-i18n="startMeta">所要時間：約5分 · 40問</div>
     <div id="restoreNotice" class="restore-notice" style="display:none"></div>
   </div>
 </section>
@@ -46,8 +49,8 @@
     <div class="q-text" id="qText"></div>
     <div class="scale-wrap">
       <div class="scale-labels">
-        <span>全くそうでない</span>
-        <span>非常にそうだ</span>
+        <span data-i18n="scaleLeft">全くそうでない</span>
+        <span data-i18n="scaleRight">非常にそうだ</span>
       </div>
       <div class="scale-btns" id="scaleBtns">
         <button class="scale-btn" onclick="selectAnswer(1)">1</button>
@@ -61,27 +64,27 @@
       <button class="btn-ghost" id="btnPrev" onclick="prevQuestion()" disabled>← 戻る</button>
       <button class="btn-ghost" id="btnNext" onclick="nextQuestion()" disabled>次へ →</button>
     </div>
-    <div class="kbd-hint"><kbd>1</kbd>〜<kbd>5</kbd> で回答 &nbsp;·&nbsp; <kbd>Enter</kbd> で次へ &nbsp;·&nbsp; <kbd>←</kbd> で戻る</div>
+    <div class="kbd-hint" data-i18n="kbdHint"><kbd>1</kbd>〜<kbd>5</kbd> で回答 &nbsp;·&nbsp; <kbd>Enter</kbd> で次へ &nbsp;·&nbsp; <kbd>←</kbd> で戻る</div>
   </div>
 </section>
 
 <!-- ── RESULT SCREEN ── -->
 <section id="screen-result" class="screen">
   <div class="result-header">
-    <div class="logo"><span>STRENGTH</span> PROFILE · 診断結果</div>
+    <div class="logo"><span>STRENGTH</span> PROFILE · <span data-i18n="resultLogoSub">診断結果</span></div>
     <div class="result-actions">
-      <button class="btn-share" onclick="shareResultURL()">リンクをコピー</button>
-      <button class="btn-share" onclick="shareResult()">テキストをコピー</button>
-      <button class="btn-share" onclick="downloadShareImage()">画像をDL</button>
-      <button class="btn-share" onclick="window.print()">印刷・PDF</button>
-      <button class="btn-retry" onclick="retryQuiz()">もう一度診断する</button>
+      <button class="btn-share" onclick="shareResultURL()"     data-i18n="copyLink">リンクをコピー</button>
+      <button class="btn-share" onclick="shareResult()"        data-i18n="copyText">テキストをコピー</button>
+      <button class="btn-share" onclick="downloadShareImage()" data-i18n="downloadImg">画像をDL</button>
+      <button class="btn-share" onclick="window.print()"       data-i18n="printPdf">印刷・PDF</button>
+      <button class="btn-retry" onclick="retryQuiz()"           data-i18n="retryBtn">もう一度診断する</button>
     </div>
   </div>
   <div class="result-content">
 
     <!-- CATCHCOPY -->
     <div class="catchcopy-section anim-fadeup anim-delay-1">
-      <div class="catchcopy-label">— YOUR STRENGTH PROFILE —</div>
+      <div class="catchcopy-label" data-i18n="catchcopyLabel">— YOUR STRENGTH PROFILE —</div>
       <div class="catchcopy-text" id="catchcopyText"></div>
     </div>
 
@@ -134,7 +137,7 @@
         <div class="section-title-line"></div>
       </div>
       <div class="citation">
-        <div class="citation-title">参考文献 · REFERENCES</div>
+        <div class="citation-title" data-i18n="citationTitle">参考文献 · REFERENCES</div>
         <div class="citation-list">
           <div class="citation-item">· Big Five Personality Model — Costa, P.T., &amp; McCrae, R.R. (1992). <em>Revised NEO Personality Inventory.</em> Goldberg, L.R. (1990). IPIP.</div>
           <div class="citation-item">· VIA Classification of Character Strengths — Peterson, C., &amp; Seligman, M.E.P. (2004). <em>Character Strengths and Virtues.</em> University of Pennsylvania.</div>
@@ -149,9 +152,10 @@
 <canvas id="shareCanvas" style="display:none;position:absolute;top:-9999px;left:-9999px;"></canvas>
 
 <!-- TOAST -->
-<div class="toast" id="toast">コピーしました ✓</div>
+<div class="toast" id="toast"></div>
 
 <!-- JavaScript (依存関係の順に読み込む) -->
+<script src="./i18n.js"></script>
 <script src="./data.js"></script>
 <script src="./quiz.js"></script>
 <script src="./compute.js"></script>

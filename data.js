@@ -294,6 +294,13 @@ const PROFILES = {
 };
 
 function generateProfile(bigFiveTop, viaTop) {
+  if (typeof currentLang !== 'undefined' && currentLang === 'en') {
+    const bfEn  = (typeof BF_JA_TO_EN !== 'undefined' && BF_JA_TO_EN[bigFiveTop]) || bigFiveTop;
+    const viaEn = (typeof VIA_NAME_EN  !== 'undefined' && VIA_NAME_EN[viaTop])     || viaTop;
+    return typeof t === 'function'
+      ? t('profileFallback')(bfEn, viaEn)
+      : `A person with high <em>${bfEn}</em> and strong <em>${viaEn}</em>.`;
+  }
   const key = `${bigFiveTop}_${viaTop}`;
   if (PROFILES[key]) return PROFILES[key];
   return `<em>${bigFiveTop}</em>の高さと<em>${viaTop}</em>の強みを持つ、独自の強みプロフィール。`;

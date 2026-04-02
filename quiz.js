@@ -55,17 +55,17 @@ function updateRestoreNotice() {
     const data = JSON.parse(savedProgress);
     const done = Object.keys(data.answers).length;
     notice.innerHTML = `
-      <div class="restore-notice-title">途中の診断が保存されています（${done} / 40 問）</div>
+      <div class="restore-notice-title">${t('restoreProgress')(done)}</div>
       <div class="restore-btns">
-        <button class="btn-restore-primary" onclick="resumeQuiz()">続きから再開する</button>
-        <button class="btn-restore-ghost"   onclick="startFresh()">最初からやり直す</button>
+        <button class="btn-restore-primary" onclick="resumeQuiz()">${t('resumeBtn')}</button>
+        <button class="btn-restore-ghost"   onclick="startFresh()">${t('startFreshBtn')}</button>
       </div>`;
   } else {
     notice.innerHTML = `
-      <div class="restore-notice-title">以前の診断結果が保存されています</div>
+      <div class="restore-notice-title">${t('restoreResult')}</div>
       <div class="restore-btns">
-        <button class="btn-restore-primary" onclick="restoreResult()">結果を見る</button>
-        <button class="btn-restore-ghost"   onclick="startFresh()">もう一度診断する</button>
+        <button class="btn-restore-primary" onclick="restoreResult()">${t('viewResultBtn')}</button>
+        <button class="btn-restore-ghost"   onclick="startFresh()">${t('retryFromBtn')}</button>
       </div>`;
   }
 }
@@ -101,9 +101,12 @@ function startQuiz() {
 
 function renderQuestion() {
   const q = QUESTIONS[currentQ];
+  const {text, category} = getQuestionTranslation(q.id);
   document.getElementById('qNum').textContent = q.id;
-  document.getElementById('qCategory').textContent = q.category;
-  document.getElementById('qText').textContent = q.text;
+  document.getElementById('qCategory').textContent = category;
+  document.getElementById('qText').textContent = text;
+  document.getElementById('btnPrev').textContent = t('prevBtn');
+  document.getElementById('btnNext').textContent = t('nextBtn');
   document.getElementById('progressBar').style.width = `${(currentQ / QUESTIONS.length) * 100}%`;
 
   const btns = document.querySelectorAll('.scale-btn');
@@ -166,7 +169,7 @@ function finishQuiz() {
 }
 
 function retryQuiz() {
-  if (confirm('診断をリセットしてもう一度始めますか？')) {
+  if (confirm(t('retryConfirm'))) {
     stopSoundtrack();
     clearProgress();
     localStorage.removeItem('strength_result');

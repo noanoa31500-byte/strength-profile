@@ -222,7 +222,7 @@ function renderSoundtrackSection(result) {
       <div class="soundtrack-top">
         <div>
           <div class="soundtrack-label">WEB AUDIO API · GENERATIVE MUSIC</div>
-          <div class="soundtrack-desc">あなたのBig Fiveプロフィールから<br>リアルタイム生成したパーソナル音楽。外向性がテンポを、協調性がスケールを、開放性が音色を決める。</div>
+          <div class="soundtrack-desc">${t('soundtrackDesc')}</div>
           <div class="soundtrack-tags">
             <span class="soundtrack-tag accent">${mode.toUpperCase()} SCALE</span>
             <span class="soundtrack-tag">${bpmRound} BPM</span>
