@@ -364,12 +364,14 @@ function renderIntuitionSection(result) {
   const deliberateItem = top5Timings.find(v => v.ms >= 5000);
 
   let insight = '';
-  if (instantItem || deliberateItem) {
-    const fastName = getViaName(instantItem?.via   || '');
-    const slowName = getViaName(deliberateItem?.via || '');
-    const fastSec  = instantItem    ? (instantItem.ms/1000).toFixed(1)    : null;
-    const slowSec  = deliberateItem ? (deliberateItem.ms/1000).toFixed(1) : null;
-    insight = t('intuitionInsight')(fastName, fastSec, slowName, slowSec);
+  if (top5Timings.length > 0) {
+    const fastItem = top5Timings[0];
+    const slowItem = deliberateItem && deliberateItem.via !== fastItem.via ? deliberateItem : null;
+    const fastName = getViaName(fastItem.via);
+    const slowName = slowItem ? getViaName(slowItem.via) : null;
+    const fastSec  = (fastItem.ms / 1000).toFixed(1);
+    const slowSec  = slowItem ? (slowItem.ms / 1000).toFixed(1) : null;
+    if (fastName) insight = t('intuitionInsight')(fastName, fastSec, slowName, slowSec);
   }
 
   const listHTML = top5Timings.map((item, i) => {
